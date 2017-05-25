@@ -28,7 +28,7 @@ void euler(double* x, double* y, double h, double vx_1, double vy_1, int step)
     while (t<step)
     {
         fx=(-G*Mf*Mh*x[i])/pow(sqrt(pow(x[i],2)+pow(y[i],2)),3);
-        fx=(-G*Mf*Mh*y[i])/pow(sqrt(pow(x[i],2)+pow(y[i],2)),3);
+        fy=(-G*Mf*Mh*y[i])/pow(sqrt(pow(x[i],2)+pow(y[i],2)),3);
         x[i+1]=x[i]+vx_1*h;
         vx_2=vx_1+1/Mh*fx*h;
         y[i+1]=y[i]+vy_1*h;

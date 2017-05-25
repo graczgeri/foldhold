@@ -6,7 +6,16 @@
 #include <stdlib.h>
 #include <math.h>
 
-double* diff(double*r)
+void print(double* k)
+{
+    for (int i=0;i<9;i++)
+    {
+        printf(" %f ", k[i]);
+    }
+    printf("\n");
+}
+
+double* diff(double* r)
 {
     double* d =(double*)malloc(9*sizeof(double));
     double Mf=5.9736*pow(10,24);
@@ -24,7 +33,6 @@ double* diff(double*r)
     //printf("diff: %f |", d[0]);
     return d;
 }
-
 
 double* euler(double* r, double h, double* k,double s)
 {
@@ -45,6 +53,7 @@ double* euler(double* r, double h, double* k,double s)
     return lepes2;
 }
 
+
 int main()
 {
     double Mf=5.9736*pow(10,24);
@@ -56,12 +65,12 @@ int main()
     r[0]=0.0; //t ido
     r[1]=0.0; //Hold v_x
     r[2]=968; // Hold v_y Foldtavolban
-    r[3]=0.0; //Fold v_x
-    r[4]=-Mh/Mf*964 ; //Fold v_y
+    r[3]=0.0; //F�ld v_x
+    r[4]=-Mh/Mf*964 ; //F�ld v_y
     r[5]=-405500000; //Hold x Foldtavolban
     r[6]=0.0; // Hold y
-    r[7]=0.0; // Fold x
-    r[8]=0.0; // Fold y
+    r[7]=0.0; // F�ld x
+    r[8]=0.0; // F�ld y
     double h=100;
     int n=60*24*30;
 
@@ -100,7 +109,7 @@ int main()
         k4=euler(r,h,k3,1);
         //print(k4);
 
-         //printf("r elotte: \n");
+        //printf("r elotte: \n");
         //print(r);
         for(int j=0; j<r_size; j++)
         {
@@ -121,7 +130,7 @@ int main()
         free(k3);
     }
 
-        printf("%d", n);
+    printf("%d", n);
     for(int i=0;i<n;i++)
     {
         for(int j=0;j<r_size;j++)
@@ -130,6 +139,6 @@ int main()
         }
     fprintf(f,"\n");
     }
-    printf("rk4.dat tartalmazza a megoldast");
+    printf("az rk4.dat tartalmazza a megoldast");
     return 0;
 }
