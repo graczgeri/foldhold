@@ -9,7 +9,24 @@
 
 
 
+double* euler(double* r, double h, double* k,double s)
+{
+    double* lepes1=(double*)malloc(9*sizeof(double));
+    double* lepes2=(double*)malloc(9*sizeof(double));
+    for(int i=0;i<9;i++)
+    {
+        lepes1[i]=r[i]+k[i]*s;
+    }
+    //printf("lepes 1: %d |", lepes1[0]);
 
+    lepes2=diff(lepes1);
+    for(int i=0;i<9;i++)
+    {
+        lepes2[i]=lepes2[i]*h;
+    }
+            //printf("lepes 2: %d |\n", lepes2[0]);
+    return lepes2;
+}
 
 int main()
 {
@@ -39,3 +56,50 @@ int main()
     double* k3;
     double* k4;
     double b;
+
+    FILE* f;
+    f=fopen("rk4.dat","w");
+
+    for(int i=0; i<n; i++)
+    {
+        //printf("\n%d\n",i);
+        /*for(int j=0;j<9;j++)
+        {
+            fprintf(f, "%f ",r[j]);
+        }
+        fprintf(f, "\n");*/
+
+
+        //printf("k1: \n");
+        k1=euler(r,h,k1,0);
+       // print(k1);
+        //printf("k2: \n");
+        k2=euler(r,h,k1,0.5);
+        //print(k2);
+        //printf("k3: \n");
+        k3=euler(r,h,k2,0.5);
+        //print(k3);
+        //printf("k4: \n");
+        k4=euler(r,h,k3,1);
+        //print(k4);
+
+         //printf("r elotte: \n");
+        //print(r);
+        for(int j=0; j<r_size; j++)
+        {
+            if (j==0)
+            {
+                b=r[j];
+                r[j]+=1.0;
+            }else{
+                b=r[j];
+                r[j]=r[j]+k1[j]*1/6+k2[j]*1/3+k3[j]*1/3+k4[j]*1/6;
+                b=r[j];
+            }
+        }
+        //printf("r utana: \n");
+        //print(r);
+        free(k1);
+        free(k2);
+        free(k3);
+    }
