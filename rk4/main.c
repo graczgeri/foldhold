@@ -74,14 +74,14 @@ int main()
     double h=100;
     int n=60*24*30;
 
-    printf("%d", n);
+    //printf("%d", n);
     
-    double* matrix=(double*)malloc(n*9*sizeof(double));
+    //double* matrix=(double*)malloc(n*9*sizeof(double));
     double* k1=(double*)malloc(n*sizeof(double));
     double* k2;
     double* k3;
     double* k4;
-    double b;
+    //double b;
 
     FILE* f;
     f=fopen("rk4.dat","w");
@@ -113,16 +113,15 @@ int main()
         //print(r);
         for(int j=0; j<r_size; j++)
         {
+            fprintf(f, "%f", r[j]);
             if (j==0)
             {
-                b=r[j];
                 r[j]+=1.0;
             }else{
-                b=r[j];
                 r[j]=r[j]+k1[j]*1/6+k2[j]*1/3+k3[j]*1/3+k4[j]*1/6;
-                b=r[j];
             }
         }
+        fprintf(f,"\n");
         //printf("r utana: \n");
         //print(r);
         free(k1);
@@ -130,7 +129,7 @@ int main()
         free(k3);
     }
 
-    printf("%d", n);
+    /*printf("%d", n);
     for(int i=0;i<n;i++)
     {
         for(int j=0;j<r_size;j++)
@@ -138,7 +137,7 @@ int main()
             fprintf(f,"%f ",matrix[i*r_size+j]);
         }
     fprintf(f,"\n");
-    }
+    }*/
     printf("az rk4.dat tartalmazza a megoldast");
     return 0;
 }
