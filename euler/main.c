@@ -55,7 +55,7 @@ int main()
     double G=6.67384e-11;
 
     int step=3600*24*30;
-    double h=1200.0;
+    double h=1000.0;
 
     double* x=(double*)malloc(step, sizeof(double));
     double* y=(double*)malloc(step, sizeof(double));

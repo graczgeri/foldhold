@@ -8,7 +8,7 @@
             "program": "${workspaceRoot}/build/euler.exe",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceRoot}",
+            "cwd": "${workspaceRoot}/euler",
             "environment": [],
             "externalConsole": false
         },
@@ -19,7 +19,7 @@
             "program": "${workspaceRoot}/build/rk4.exe",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceRoot}",
+            "cwd": "${workspaceRoot}/rk4",
             "environment": [],
             "externalConsole": false
         },
