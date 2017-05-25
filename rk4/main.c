@@ -6,7 +6,24 @@
 #include <stdlib.h>
 #include <math.h>
 
-
+double* diff(double*r)
+{
+    double* d =(double*)malloc(9*sizeof(double));
+    double Mf=5.9736*pow(10,24);
+    double Mh=7.349*pow(10,22);
+    double G=6.67384*pow(10,-11);
+    d[0]=1.0;//ido
+    d[1]=-G*Mf*(r[5]-r[7])/pow(sqrt(pow(r[5]-r[7],2)+pow(r[6]-r[8],2)),3);//hxdiff
+    d[2]=-G*Mf*(r[6]-r[8])/pow(sqrt(pow(r[5]-r[7],2)+pow(r[6]-r[8],2)),3);//hydiff
+    d[3]=-G*Mh*(r[7]-r[5])/pow(sqrt(pow(r[5]-r[7],2)+pow(r[6]-r[8],2)),3);//fxdiff
+    d[4]=-G*Mh*(r[8]-r[6])/pow(sqrt(pow(r[5]-r[7],2)+pow(r[6]-r[8],2)),3);//fydiff
+    d[5]=r[1];//hvx
+    d[6]=r[2];//hvy
+    d[7]=r[3];//fvx
+    d[8]=r[4];//fvy
+    //printf("diff: %f |", d[0]);
+    return d;
+}
 
 
 double* euler(double* r, double h, double* k,double s)
@@ -103,3 +120,16 @@ int main()
         free(k2);
         free(k3);
     }
+
+        printf("%d", n);
+    for(int i=0;i<n;i++)
+    {
+        for(int j=0;j<r_size;j++)
+        {
+            fprintf(f,"%f ",matrix[i*r_size+j]);
+        }
+    fprintf(f,"\n");
+    }
+    printf("rk4.dat tartalmazza a megoldast");
+    return 0;
+}
