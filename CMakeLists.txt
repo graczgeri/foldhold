@@ -22,27 +22,7 @@ add_custom_command(COMMAND rk4
 
 add_custom_target(data DEPENDS ${CMAKE_BINARY_DIR}/euler/euler.dat ${CMAKE_BINARY_DIR}/rk4/rk4.dat)
 
-# Find Gnuplot
-find_package (Gnuplot REQUIRED)
-
-# Target that generates data file
-add_custom_command(COMMAND ${GNUPLOT_EXECUTABLE} ${PROJECT_SOURCE_DIR}/script/euler_plot.plt
-                   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/euler
-                   OUTPUT ${CMAKE_BINARY_DIR}/euler/euler.png
-                   BYPRODUCTS ${CMAKE_BINARY_DIR}/euler/euler.png
-                   DEPENDS ${PROJECT_SOURCE_DIR}/script/euler_plot.plt data
-                   COMMENT "Generating euler plot")
-
-
-add_custom_command(COMMAND ${GNUPLOT_EXECUTABLE} ${PROJECT_SOURCE_DIR}/script/rk4_plot.plt
-                   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/rk4
-                   OUTPUT ${CMAKE_BINARY_DIR}/rk4/rk4.png
-                   BYPRODUCTS ${CMAKE_BINARY_DIR}/rk4/rk4_plot.png
-                   DEPENDS ${PROJECT_SOURCE_DIR}/script/rk4_plot.plt data
-                   COMMENT "Generating rk4 plot")
-
-add_custom_target(plot DEPENDS ${CMAKE_BINARY_DIR}/euler/euler.png ${PROJECT_SOURCE_DIR}rk4/rk4.png)
-
+add_subdirectory (doc)
 
 # Compiler specific options
 if(CMAKE_C_COMPILER_ID MATCHES "MSVC")
