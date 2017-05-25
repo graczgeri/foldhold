@@ -39,7 +39,7 @@ add_custom_command(COMMAND ${GNUPLOT_EXECUTABLE} ${PROJECT_SOURCE_DIR}/script/rk
                    OUTPUT ${CMAKE_BINARY_DIR}/rk4.png
                    BYPRODUCTS ${CMAKE_BINARY_DIR}/rk4_plot.png
                    DEPENDS ${PROJECT_SOURCE_DIR}/script/rk4_plot.plt data
-                   COMMENT "Generating euler plot")
+                   COMMENT "Generating rk4 plot")
 
 add_custom_target(plot DEPENDS ${CMAKE_BINARY_DIR}/euler.png ${PROJECT_SOURCE_DIR}/script/rk4_plot.plt data)
 
