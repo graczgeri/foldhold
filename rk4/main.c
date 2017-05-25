@@ -113,7 +113,7 @@ int main()
         //print(r);
         for(int j=0; j<r_size; j++)
         {
-            fprintf(f, "%f", r[j]);
+            fprintf(f, "%f ", r[j]);
             if (j==0)
             {
                 r[j]+=1.0;
