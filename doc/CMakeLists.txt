@@ -10,7 +10,7 @@ set(EULER "${CMAKE_BINARY_DIR}/euler.png")
 set(RK4  "${CMAKE_BINARY_DIR}/rk4.png")
 
 # Target that generates documentation
-add_latex_document(src/latex_template.tex
+add_latex_document (src/latex_template.tex
                    CONFIGURE src/latex_template.tex
                    TARGET_NAME doc
                    INPUTS src/nyilatkozat.tex src/abeld.bst
