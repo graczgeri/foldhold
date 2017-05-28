@@ -22,8 +22,6 @@ add_custom_command(COMMAND rk4
 
 add_custom_target(data DEPENDS ${CMAKE_BINARY_DIR}/euler/euler.dat ${CMAKE_BINARY_DIR}/rk4/rk4.dat)
 
-add_subdirectory (doc)
-
 # Compiler specific options
 if(CMAKE_C_COMPILER_ID MATCHES "MSVC")
     #string(REGEX REPLACE "/W[0-9]" "/W4" CMAKE_C_FLAGS ${CMAKE_C_FLAGS})
@@ -32,3 +30,46 @@ if(CMAKE_C_COMPILER_ID MATCHES "MSVC")
 else(CMAKE_C_COMPILER_ID MATCHES "MSVC")
     add_compile_options("-Wall")
 endif(CMAKE_C_COMPILER_ID MATCHES "MSVC")
+
+
+# Find Gnuplot
+find_package (Gnuplot REQUIRED)
+
+# Target that generates data file
+add_custom_command(COMMAND ${GNUPLOT_EXECUTABLE} ${CMAKE_BINARY_DIR}/doc/plot/script/euler_plot.plt
+                   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/euler
+                   OUTPUT ${CMAKE_BINARY_DIR}/doc/img/euler_plot.png
+                   BYPRODUCTS ${CMAKE_BINARY_DIR}/doc/img/euler_plot.png
+                   DEPENDS ${CMAKE_BINARY_DIR}/doc/plot/script/euler_plot.plt data
+                   COMMENT "Generating euler plot")
+
+
+add_custom_command(COMMAND ${GNUPLOT_EXECUTABLE} ${CMAKE_BINARY_DIR}/doc/plot/script/rk4_plot.plt
+                   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/rk4
+                   OUTPUT ${CMAKE_BINARY_DIR}/doc/img/rk4_plot.png
+                   BYPRODUCTS ${CMAKE_BINARY_DIR}/doc/img/rk4_plot.png
+                   DEPENDS ${CMAKE_BINARY_DIR}/doc/plot/script/rk4_plot.plt data
+                   COMMENT "Generating rk4 plot")
+
+
+add_custom_target(plot DEPENDS ${CMAKE_BINARY_DIR}/doc/img/euler_plot.png ${CMAKE_BINARY_DIR}/doc/img/rk4_plot.png)
+
+# Include useful macros
+list (APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/doc/cmake)
+include (doc/cmake/UseLATEX.cmake)
+
+set(EULER "${CMAKE_BINARY_DIR}/euler.png")
+set(RK4  "${CMAKE_BINARY_DIR}/rk4.png")
+
+# Target that generates documentation
+add_latex_document (doc/src/latex_template.tex
+                   CONFIGURE doc/src/latex_template.tex
+                   TARGET_NAME doksi
+                   INPUTS doc/src/nyilatkozat.tex doc/src/abeld.bst
+                   BIBFILES doc/src/references.bib
+                   IMAGE_DIRS doc/img
+                   IMAGES doc/img/elte.eps 
+                   DEPENDS doc/src/latex_template.tex plot
+                   EXCLUDE_FROM_ALL)
+
+    
