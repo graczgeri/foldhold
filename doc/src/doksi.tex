@@ -121,14 +121,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \thispagestyle{empty}  
+  \vspace*{3cm}
 \begin{abstract}
-Az írt programok a Föld-Hold rendszer mozgásegyenletét oldják meg síkban. Két módszert, az explicit Euler módszert és az  adaptív lépéshossz-szabályozott negyedrendű Runge-Kutta-módszert hasonlítottam össze.
+A megírt programok a Föld-Hold rendszer mozgásegyenletét oldják meg, numerikus integrálási módszerekkel. Két módszert, az explicit Euler módszert és az  adaptív lépéshossz-szabályozott negyedrendű Runge-Kutta-módszert hasonlítottam össze.
 \end{abstract}
 
 % ---------------------------- T A R T A L O M J E G Y Z É K ----------------------------
 \newpage \vspace*{1cm}
 \thispagestyle{plain}                                                                                                                                             
-\pagenumbering{roman} \setcounter{page}{1}
+%\pagenumbering{roman} \setcounter{page}{1}
 \tableofcontents
 
 \vspace*{1cm}
@@ -138,9 +139,8 @@ Az írt programok a Föld-Hold rendszer mozgásegyenletét oldják meg síkban. 
 %\listoftables
 
 \newpage \vspace*{1cm}
-
-\pagenumbering{arabic} \setcounter{page}{1}
 \pagestyle{fancy}
+\pagenumbering{arabic} \setcounter{page}{1}
 
 % ---------------------------- M A G A   A   D O L G O Z A T ----------------------------
 
@@ -163,7 +163,7 @@ Az Euler módszer során a Földet rögzítettem az origóban (0;0), a negyedren
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Program}
 \label{sec:prog}
-A programokat C nyelven írtam, először CodeBlocks környezetben, majd Visual Studio Code-ban pontosítva, alakítva az adott feladathoz. A program írása közben Git-es verziókövetést használtam, a repositoryt a \url{https://github.com/graczgeri/foldhold} link alatt lehet elérni. A program írása közben több branchet is létrehoztam, az áttekinthetőség kedvéért, ezeket - miután nem volt rá szükség és illesztettem a master brachbe a megfelelő részeket - töröltem. Az összehasonlítás szemléltetésére gnuplot segítségével plotoltam a kapott adatsorokat. Az egészet CMake segítségével buildeltem. A CMake használata végett külön scriptet írtam az ábrák elkészítésére és egy előre gyártott tex mintát módosítottam a saját felhasználásnak megfelelően.
+A programokat C nyelven írtam, először CodeBlocks környezetben a \cite{artic:negyedik} forrás alapján, majd Visual Studio Code-ban pontosítva, alakítva a jelenlegi feladathoz. A program írása közben Git-es verziókövetést használtam, a repositoryt a \url{https://github.com/graczgeri/foldhold} link alatt lehet elérni. A program írása közben több branchet is létrehoztam, az áttekinthetőség kedvéért, ezeket - miután nem volt rá szükség és illesztettem a master brachbe a megfelelő részeket - töröltem. Az összehasonlítás szemléltetésére gnuplot segítségével plotoltam a kapott adatsorokat. Az egészet CMake segítségével buildeltem. A használat során a \cite{artic:elso,artic:masodik} forrásokra támaszkodtam. A CMake használata végett külön scriptet írtam az ábrák elkészítésére és egy előre gyártott tex mintát módosítottam a saját felhasználásnak megfelelően. Sajnos a pdf file elkészítése nem sikerült a CMake használatával, így azt külön csináltam meg.
 
 \subsection{Euler módszer}
 \label{subsec:euler_1}
@@ -227,14 +227,10 @@ A kiértékelés során a program egy tömbbe írta a számított adatokat, majd
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.9\textwidth]{@RK4@}
-\end{center}
   \caption{\textit{Runge-Kutta 4 módszer}}
 \label{fig:rk4}
+\end{center}
 \end{figure}
-
-
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ez ugyanazt tudja, mint a \newpage, azzal a különbséggel, hogy hogyha vannak még függő 
@@ -254,6 +250,7 @@ Szeretném megköszönni a segítséget a gyakorlatvezetőknek, Bíró Gábornak
 \newpage \vspace*{2cm}
 
 \addcontentsline{toc}{section}{Irodalomjegyzék}
+
 \bibliographystyle{src/abeld}       
 % van egy csomó féle/fajta stílus, google segít bennük. Én ezt használtam a diplomamunkámhoz. 
 % A helyes működéshez az kell, hogy az abeld.bst ugyanebben a mappában legyen.
