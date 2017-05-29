@@ -121,14 +121,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \thispagestyle{empty}  
+  \vspace*{3cm}
 \begin{abstract}
-Az írt programok a Föld-Hold rendszer mozgásegyenletét oldják meg síkban. Két módszert, az explicit Euler módszert és az  adaptív lépéshossz-szabályozott negyedrendű Runge-Kutta-módszert hasonlítottam össze.
+A megírt programok a Föld-Hold rendszer mozgásegyenletét oldják meg, numerikus integrálási módszerekkel. Két módszert, az explicit Euler módszert és az  adaptív lépéshossz-szabályozott negyedrendű Runge-Kutta-módszert hasonlítottam össze.
 \end{abstract}
 
 % ---------------------------- T A R T A L O M J E G Y Z É K ----------------------------
 \newpage \vspace*{1cm}
 \thispagestyle{plain}                                                                                                                                             
-\pagenumbering{roman} \setcounter{page}{1}
+%\pagenumbering{roman} \setcounter{page}{1}
 \tableofcontents
 
 \vspace*{1cm}
@@ -137,10 +138,10 @@ Az írt programok a Föld-Hold rendszer mozgásegyenletét oldják meg síkban. 
 \vspace*{1cm}
 %\listoftables
 
-\newpage \vspace*{1cm}
-
-\pagenumbering{arabic} \setcounter{page}{1}
+\newpage
 \pagestyle{fancy}
+\pagenumbering{arabic} \setcounter{page}{1}
+\vspace*{1cm}
 
 % ---------------------------- M A G A   A   D O L G O Z A T ----------------------------
 
@@ -148,6 +149,7 @@ Az írt programok a Föld-Hold rendszer mozgásegyenletét oldják meg síkban. 
 
 \section{Bevezetés}
 \label{sec:bev}
+
 A Föld-Hold rendszerének mozgását vizsgáltam síkban. A feladat során geocentrikus koordinátákkal dolgoztam. A mozgást Newton általános mozgástörvénye írja le:
 \begin{center}
 \begin{equation}
@@ -155,7 +157,6 @@ A Föld-Hold rendszerének mozgását vizsgáltam síkban. A feladat során geoc
 F=\gamma\frac{m\cdot M}{r^2}
 \end{equation}
 \end{center}
-
 Az Euler módszer során a Földet rögzítettem az origóban (0;0), a negyedrendű Runge-Kutta módszer során a Föld és a Hold is szabadon mozoghatott, a megadott kezdőfeltételeknek megfelelően. A feladat tulajdonképpen differenciálegyenletek numerikus integrálása, különböző pontosságú módszerekkel.
 
 
@@ -163,10 +164,12 @@ Az Euler módszer során a Földet rögzítettem az origóban (0;0), a negyedren
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Program}
 \label{sec:prog}
-A programokat C nyelven írtam, először CodeBlocks környezetben, majd Visual Studio Code-ban pontosítva, alakítva az adott feladathoz. A program írása közben Git-es verziókövetést használtam, a repositoryt a \url{https://github.com/graczgeri/foldhold} link alatt lehet elérni. A program írása közben több branchet is létrehoztam, az áttekinthetőség kedvéért, ezeket - miután nem volt rá szükség és illesztettem a master brachbe a megfelelő részeket - töröltem. Az összehasonlítás szemléltetésére gnuplot segítségével plotoltam a kapott adatsorokat. Az egészet CMake segítségével buildeltem. A CMake használata végett külön scriptet írtam az ábrák elkészítésére és egy előre gyártott tex mintát módosítottam a saját felhasználásnak megfelelően.
+
+A programokat C nyelven írtam, először CodeBlocks környezetben a \cite{artic:negyedik} forrás alapján, majd Visual Studio Code-ban pontosítva, alakítva a jelenlegi feladathoz. A program írása közben Git-es verziókövetést használtam, a repositoryt a \url{https://github.com/graczgeri/foldhold} link alatt lehet elérni. A program írása közben több branchet is létrehoztam, az áttekinthetőség kedvéért, ezeket - miután nem volt rá szükség és illesztettem a master brachbe a megfelelő részeket - töröltem. Az összehasonlítás szemléltetésére gnuplot segítségével plotoltam a kapott adatsorokat. Az egészet CMake segítségével buildeltem. A használat során a \cite{artic:elso,artic:masodik} forrásokra támaszkodtam. A CMake használata végett külön scriptet írtam az ábrák elkészítésére és egy előre gyártott tex mintát módosítottam a saját felhasználásnak megfelelően. Sajnos a pdf file elkészítése nem sikerült a CMake használatával, így azt külön csináltam meg.
 
 \subsection{Euler módszer}
 \label{subsec:euler_1}
+
 Az Euler módszer lényege, hogy $\delta$x (általában h-val jelölt) diszkrét lépéshosszal léptetjük a változók értékét. Az összes változót léptetjük egyszerre:
 \begin{center}
 \begin{equation}
@@ -183,6 +186,7 @@ A módszer hibája, hogy ha a derivált a lépés során túl gyorsan változik,
 
 \subsection{Runge-Kutta 4 módszer}
 \label{subsec:rk4_1}
+
 Az Euler módszer javításának tekinthető a középponti módszer. Maga az Euler módszer aszimmetrikus, mivel a deriváltat mindig az $x_n$ helyen vesszük. A középponti módszer lényege, hogy teszünk egy fél lépést, kiszámoljuk a deriváltat a középső pontban és ezt használjuk a teljes lépés során. A Runge-Kutta módszer ezt használja fel, több lépésben:
 \begin{center}
 \begin{equation}
@@ -201,7 +205,6 @@ k_4=h\cdot f(x_n+h,y_n+k_3)\newline
 y_{n+1}=y_n+\frac{1}{6}k_1+\frac{1}{3}k_2+\frac{1}{3}k_3+\frac{1}{6}k_4+O(h^5)
 \end{equation}
 \end{center}
-
 Amiben $k_{(1..4)}$ a lépések, $O(h^5)$ pedig a lecsökkent hiba az analitikus eredménytől. A lépések együtthatóit a Butcher-tábla adja.
 
 \section{Eredmény}
@@ -227,21 +230,17 @@ A kiértékelés során a program egy tömbbe írta a számított adatokat, majd
 \begin{figure}
 \begin{center}
 \includegraphics[width=0.9\textwidth]{@RK4@}
-\end{center}
   \caption{\textit{Runge-Kutta 4 módszer}}
 \label{fig:rk4}
+\end{center}
 \end{figure}
-
-
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % ez ugyanazt tudja, mint a \newpage, azzal a különbséggel, hogy hogyha vannak még függő 
 % ábrák vagy táblázatok, amik még nem lettek elhelyezve, akkor az most itt megtörténik, és 
 % csak utána megyünk tovább. A \newpage most nekünk pl hatástalan lenne.
-\clearpage
 
+\cleardoublepage
 \vspace*{2cm}
 
 % Mivel *-al jelöljük meg az új section-t, nem fog bekerülni a tartalomjegyzékbe, hacsak kézzel hozzá nem adjuk
@@ -254,6 +253,7 @@ Szeretném megköszönni a segítséget a gyakorlatvezetőknek, Bíró Gábornak
 \newpage \vspace*{2cm}
 
 \addcontentsline{toc}{section}{Irodalomjegyzék}
+
 \bibliographystyle{src/abeld}       
 % van egy csomó féle/fajta stílus, google segít bennük. Én ezt használtam a diplomamunkámhoz. 
 % A helyes működéshez az kell, hogy az abeld.bst ugyanebben a mappában legyen.
