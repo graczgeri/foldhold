@@ -1,5 +1,5 @@
 set term png size 1280, 720
-set out "euler_plot.png"
+set out "euler.png"
 
 set title "Euler fit"
 

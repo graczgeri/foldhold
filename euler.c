@@ -64,7 +64,7 @@ int main()
     y[0]=apog;
 
     euler(x,y,h,v_apog,0,step);
-    printf("az euler.dat tartalmazza a megoldast");
+    printf("az euler.dat tartalmazza a megoldast \n");
     free(x);
     free(y);
 

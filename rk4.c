@@ -138,6 +138,6 @@ int main()
         }
     fprintf(f,"\n");
     }*/
-    printf("az rk4.dat tartalmazza a megoldast");
+    printf("az rk4.dat tartalmazza a megoldast \n");
     return 0;
 }
