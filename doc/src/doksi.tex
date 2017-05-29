@@ -1,0 +1,289 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{graphicx}
+
+\usepackage[utf8]{inputenc}
+\usepackage[magyar]{babel}
+
+% a szép matematikai szimbólumokért
+\usepackage{amssymb}
+\usepackage{amsmath}
+
+% ha táblázatban szeretnénk egyesített sorokat is
+\usepackage{multirow}
+
+% horizontal line
+\usepackage{hhline}
+
+% eps formátumú ábrák --> pdflatex fordításhoz!!
+\usepackage{epsfig}
+
+% egyenletekhez, pl mátrixok írására
+\usepackage{array}
+
+% ha betűszíneket is szeretnénk használni
+\usepackage{color}
+
+% Margók egyéni beállításai
+\usepackage{anysize}
+\marginsize{1.64cm}{1.64cm}{1.2cm}{2.4cm} %\left right top bottom
+
+% vakszöveg
+\usepackage{lipsum}
+\usepackage{blindtext}
+
+% A HIVATKOZÁSOKHOZ HASZNÁLT CSOMAGOK. RÉSZLETESEBBEN LD: google -> latex bibtex
+\usepackage[numbers, square, comma, sort&compress]{natbib}
+%\usepackage[format=hang,labelsep=period]{caption}
+
+\usepackage[unicode]{hyperref}   % ezzel a hivatkozások linkké válnak
+\usepackage{bookmark}
+\hypersetup{bookmarksopen={true}}
+\hypersetup{bookmarksopenlevel={2}}
+\hypersetup{bookmarksnumbered={true}}
+\hypersetup{
+  colorlinks,%
+  citecolor=red,%
+  filecolor=black,%                                                                                                                                               
+  linkcolor=blue,%
+  urlcolor=green
+}
+%\numberwithin{equation}{section}          % ezekkel tudod beállítani, hogy milyen felbontásig menjen a hivatkozás
+%\numberwithin{figure}{subsection}
+%\numberwithin{table}{section}          % ha kikommenteled, akkor csak simán számozva lesz.
+
+%%%%%%%%%%%%%%%% Néhány dolog a fancy kinézethez
+
+\frenchspacing
+\setlength{\parskip}{2ex}
+\setlength{\headsep}{0,4cm}
+\setlength{\headheight}{4pt}
+
+% fej- es lábléc
+\usepackage{fancyhdr}
+\usepackage{fancyref}
+\usepackage{fancyvrb}
+\pagestyle{fancy}
+
+\renewcommand{\headrulewidth}{0,05pt}
+\renewcommand{\footrulewidth}{0pt}
+
+
+\fancyhf{}
+\fancyhead[RE]{{ \nouppercase{\leftmark}} }
+\fancyhead[LO]{{ \nouppercase{\leftmark}} }
+\cfoot{--~\thepage~--}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+% Címoldalt lehet egyszerűen a \maketitle paranccsal is. Ha kissé részletesebb
+% címre van szükség, azt lehet így is, kézzel megadva mindent.
+\begin{titlepage}   
+\begin{center}
+\thispagestyle{empty}  
+
+\vspace*{0.7cm}
+\rule{\linewidth}{0.5mm} \\[3mm]
+\vspace*{0.7cm}
+
+{\LARGE Kutatómunka információs eszközei}
+
+\vspace*{0.7cm}
+\rule{\linewidth}{0.5mm} \\[3mm]
+\rule{\linewidth}{0.5mm} \\[3mm]
+
+
+
+{\Large Differenciálegyenletek numerikus integrálási módszerei\\}
+
+\vspace*{0.7cm}
+\rule{\linewidth}{0.5mm} \\[3mm]
+{\footnotesize Írta: Rácz Gergely} \\
+{\tiny graczgeri@gmail.com}
+  \vspace*{2cm}
+
+\begin{figure}[h!]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{img/elte}
+\end{center}
+\end{figure}
+
+\end{center}
+\end{titlepage}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\thispagestyle{empty}  
+\begin{abstract}
+Az írt programok a Föld-Hold rendszer mozgásegyenletét oldják meg síkban. Két módszert, az explicit Euler módszert és az  adaptív lépéshossz-szabályozott negyedrendű Runge-Kutta-módszert hasonlítottam össze.
+\end{abstract}
+
+% ---------------------------- T A R T A L O M J E G Y Z É K ----------------------------
+\newpage \vspace*{1cm}
+\thispagestyle{plain}                                                                                                                                             
+\pagenumbering{roman} \setcounter{page}{1}
+\tableofcontents
+
+\vspace*{1cm}
+\listoffigures
+
+\vspace*{1cm}
+%\listoftables
+
+\newpage \vspace*{1cm}
+
+\pagenumbering{arabic} \setcounter{page}{1}
+\pagestyle{fancy}
+
+% ---------------------------- M A G A   A   D O L G O Z A T ----------------------------
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Bevezetés}
+\label{sec:bev}
+A Föld-Hold rendszerének mozgását vizsgáltam síkban. A feladat során geocentrikus koordinátákkal dolgoztam. A mozgást Newton általános mozgástörvénye írja le:
+\begin{center}
+\begin{equation}
+\label{newtequ}
+F=\gamma\frac{m\cdot M}{r^2}
+\end{equation}
+\end{center}
+
+Az Euler módszer során a Földet rögzítettem az origóban (0;0), a negyedrendű Runge-Kutta módszer során a Föld és a Hold is szabadon mozoghatott, a megadott kezdőfeltételeknek megfelelően. A feladat tulajdonképpen differenciálegyenletek numerikus integrálása, különböző pontosságú módszerekkel.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Program}
+\label{sec:prog}
+A programokat C nyelven írtam, először CodeBlocks környezetben, majd Visual Studio Code-ban pontosítva, alakítva az adott feladathoz. A program írása közben Git-es verziókövetést használtam, a repositoryt a \url{https://github.com/graczgeri/foldhold} link alatt lehet elérni. A program írása közben több branchet is létrehoztam, az áttekinthetőség kedvéért, ezeket - miután nem volt rá szükség és illesztettem a master brachbe a megfelelő részeket - töröltem. Az összehasonlítás szemléltetésére gnuplot segítségével plotoltam a kapott adatsorokat. Az egészet CMake segítségével buildeltem. A CMake használata végett külön scriptet írtam az ábrák elkészítésére és egy előre gyártott tex mintát módosítottam a saját felhasználásnak megfelelően.
+
+\subsection{Euler módszer}
+\label{subsec:euler_1}
+Az Euler módszer lényege, hogy $\delta$x (általában h-val jelölt) diszkrét lépéshosszal léptetjük a változók értékét. Az összes változót léptetjük egyszerre:
+\begin{center}
+\begin{equation}
+y_{n+1}=y_n+h\cdot f(x_n,y_n)
+\end{equation}
+\end{center}
+Eközben a független változót is léptetjük:
+\begin{center}
+\begin{equation}
+x_{n+1}=x_n+h
+\end{equation}
+\end{center}
+A módszer hibája, hogy ha a derivált a lépés során túl gyorsan változik, akkor a lépésnek relatív nagy lesz a hibája. Sok lépés után nagy lesz az eltérés az analitikus megoldástól, mivel a hiba a lépések számával felösszegződik.
+
+\subsection{Runge-Kutta 4 módszer}
+\label{subsec:rk4_1}
+Az Euler módszer javításának tekinthető a középponti módszer. Maga az Euler módszer aszimmetrikus, mivel a deriváltat mindig az $x_n$ helyen vesszük. A középponti módszer lényege, hogy teszünk egy fél lépést, kiszámoljuk a deriváltat a középső pontban és ezt használjuk a teljes lépés során. A Runge-Kutta módszer ezt használja fel, több lépésben:
+\begin{center}
+\begin{equation}
+k_1=h\cdot f(x_n,y_n)\newline
+\end{equation}
+\begin{equation}
+k_2=h\cdot f(x_n+\frac{1}{2}h,y_n+\frac{1}{2}k_1)\newline
+\end{equation}
+\begin{equation}
+k_3=h\cdot f(x_n+\frac{1}{2}h,y_n+\frac{1}{2}k_2)\newline
+\end{equation}
+\begin{equation}
+k_4=h\cdot f(x_n+h,y_n+k_3)\newline
+\end{equation}
+\begin{equation}
+y_{n+1}=y_n+\frac{1}{6}k_1+\frac{1}{3}k_2+\frac{1}{3}k_3+\frac{1}{6}k_4+O(h^5)
+\end{equation}
+\end{center}
+
+Amiben $k_{(1..4)}$ a lépések, $O(h^5)$ pedig a lecsökkent hiba az analitikus eredménytől. A lépések együtthatóit a Butcher-tábla adja.
+
+\section{Eredmény}
+\label{sec:ered}
+
+\subsection{Euler módszer}
+\label{sebsec:euler_2}
+
+A kiértékelés során a program az euler.dat adattömbbe írta a Hold x és y koordinátáit. A kapott adatokat ábrázolva látható az \ref{fig:euler}. ábrán a Hold Föld körüli pályája, rögzített Föld és Euler közelítés esetén.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{@EULER@}
+  \caption{\textit{Euler módszer}}
+\label{fig:euler}
+\end{center}
+\end{figure}
+
+\subsection{Runge-Kutta 4 módszer}
+\label{subsec:rk4_2}
+A kiértékelés során a program egy tömbbe írta a számított adatokat, majd azokat kiírta az rk4.dat adatfileba. A tömb egyszerre tartalmazta az időt, a Föld és Hold x és y koordinátáit, illetve az x és y irányú sebességkomponenseit. A Hold koordinátáit ábrázolva látható a \ref{fig:rk4}. ábrán, hogy sokkal szebben záródik a pálya, mint az Euler módszernél.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=0.9\textwidth]{@RK4@}
+\end{center}
+  \caption{\textit{Runge-Kutta 4 módszer}}
+\label{fig:rk4}
+\end{figure}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ez ugyanazt tudja, mint a \newpage, azzal a különbséggel, hogy hogyha vannak még függő 
+% ábrák vagy táblázatok, amik még nem lettek elhelyezve, akkor az most itt megtörténik, és 
+% csak utána megyünk tovább. A \newpage most nekünk pl hatástalan lenne.
+\clearpage
+
+\vspace*{2cm}
+
+% Mivel *-al jelöljük meg az új section-t, nem fog bekerülni a tartalomjegyzékbe, hacsak kézzel hozzá nem adjuk
+\addcontentsline{toc}{section}{Köszönetnyilvánítás}
+\section*{Köszönetnyilvánítás}
+Szeretném megköszönni a segítséget a gyakorlatvezetőknek, Bíró Gábornak és Nagy-Egri Máténak!
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+
+\newpage \vspace*{2cm}
+
+\addcontentsline{toc}{section}{Irodalomjegyzék}
+\bibliographystyle{src/abeld}       
+% van egy csomó féle/fajta stílus, google segít bennük. Én ezt használtam a diplomamunkámhoz. 
+% A helyes működéshez az kell, hogy az abeld.bst ugyanebben a mappában legyen.
+\bibliography{src/references}       
+% a references.bib tartalmazza egyenként a hivatkozásokat, így a tex fájlod tisztább maradhat.
+%
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% ----------------------------------- A P P E N D I X -----------------------------------
+
+%\newpage \vspace*{2cm}
+
+%\pagestyle{fancy}
+
+%\appendix
+%\section{Ez egy függelék}
+%\label{app:fugg}
+
+%És igen, ezeket is lehet \ref{app:fugg}. módon hivatkozni.
+
+% -------------------------------- N Y I L A T K O Z A T --------------------------------
+
+% Nagyon hosszú dokumentumoknál (pl könyv) érdemes több részre bontani a forráskódot is.
+% Az \input parancs után következő fájl egyszerűen "bemásolódik", így a fordító egyben 
+% fogja látni az egészet.
+\newpage
+\input src/nyilatkozat.tex  % EZT NE HAGYD KI! OTT KELL LENNIE A DOLGOZAT VÉGÉN!
+
+
+\end{document}
+
+Ez pedig már nem fog megjelenni, mivel az end document után vagyunk.
