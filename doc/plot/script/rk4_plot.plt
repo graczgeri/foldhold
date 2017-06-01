@@ -9,3 +9,4 @@ set xlabel "x"
 set ylabel "y"
 
 plot "rk4.dat" using 6:7 w lines
+set out
