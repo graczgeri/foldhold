@@ -162,11 +162,13 @@ Az Euler módszer során a Földet rögzítettem az origóban (0;0), a negyedren
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Program}
+\section{Programok}
 \label{sec:prog}
 
-A programokat C nyelven írtam, először CodeBlocks környezetben a \cite{artic:negyedik} forrás alapján, majd Visual Studio Code-ban pontosítva, alakítva a jelenlegi feladathoz. A program írása közben Git-es verziókövetést használtam, a repositoryt a \url{https://github.com/graczgeri/foldhold} link alatt lehet elérni. A program írása közben több branchet is létrehoztam, az áttekinthetőség kedvéért, ezeket - miután nem volt rá szükség és illesztettem a master brachbe a megfelelő részeket - töröltem. Az összehasonlítás szemléltetésére gnuplot segítségével plotoltam a kapott adatsorokat. Az egészet CMake segítségével buildeltem. A használat során a \cite{artic:elso,artic:masodik} forrásokra támaszkodtam. A CMake használata végett külön scriptet írtam az ábrák elkészítésére és egy előre gyártott tex mintát módosítottam a saját felhasználásnak megfelelően. Sajnos a pdf file elkészítése nem sikerült a CMake használatával, így azt külön csináltam meg.
+\subsection{Programok írása}
+\label{progiras}
 
+A programokat C nyelven írtam, először CodeBlocks környezetben a \cite{artic:negyedik} forrás alapján, majd Visual Studio Code-ban pontosítva, alakítva a jelenlegi feladathoz. A Visual Studio Code-ban a Microsoft Visual Studio 2017 programjába épített fordító használatával teszteltem a programokat működés közben. A program írása és finomítása során Git-es verziókövetést használtam. Létrehoztam egy repositoryt GitHub-on, amit a \url{https://github.com/graczgeri/foldhold} link alatt lehet elérni.A Git használatával jól össze tudtam hasonlítani a programrészeket, verziókat, jobban követhető a munka folyamata. Több branch-et is létrehoztam az áttekinthetőség kedvéért, ezeket - miután nem volt rá szükség és illesztettem a master branchbe a megfelelő részeket - töröltem. A két módszer összehasonlításának szemléltetésére gnuplot segítségével plotoltam a kapott adatsorokat. Külön könyvtárszerkezetet hoztam létre a különböző fileoknak (illetve a jegyzőkönyv miatt is). A teljes projektet CMake-kel fogtam össze és buildeltem. A könyvtárszerkezettel együtt, külön CMakeLists file-okat készítettem, az adott könyvtárban végzett feladatokra. A főkönyvtárba így egy egyszerű, pár soros file került, ami az alkönyvtárakat és azokban végzett feladatokat fogta össze. Mivel az exe file nélkül nem tud elkészülni az adatsor, illetve anélkül nincs miből ábrát készíteni, így egymástól függővé tettem a különböző programelemeket. A CMake használata végett külön scriptet írtam az ábrák elkészítésére és egy előre gyártott tex mintát módosítottam a saját felhasználásnak megfelelően. Sajnos a pdf file elkészítése nem sikerült a CMake használatával, így azt külön csináltam meg. A CMake használata során a \cite{artic:elso,artic:masodik} forrásokra támaszkodtam.
 \subsection{Euler módszer}
 \label{subsec:euler_1}
 
@@ -215,7 +217,7 @@ Amiben $k_{(1..4)}$ a lépések, $O(h^5)$ pedig a lecsökkent hiba az analitikus
 
 A kiértékelés során a program az euler.dat adattömbbe írta a Hold x és y koordinátáit. A kapott adatokat ábrázolva látható az \ref{fig:euler}. ábrán a Hold Föld körüli pályája, rögzített Föld és Euler közelítés esetén.
 
-\begin{figure}
+\begin{figure}[h!]
 \begin{center}
 \includegraphics[width=0.9\textwidth]{@EULER@}
   \caption{\textit{Euler módszer}}
@@ -227,7 +229,7 @@ A kiértékelés során a program az euler.dat adattömbbe írta a Hold x és y 
 \label{subsec:rk4_2}
 A kiértékelés során a program egy tömbbe írta a számított adatokat, majd azokat kiírta az rk4.dat adatfileba. A tömb egyszerre tartalmazta az időt, a Föld és Hold x és y koordinátáit, illetve az x és y irányú sebességkomponenseit. A Hold koordinátáit ábrázolva látható a \ref{fig:rk4}. ábrán, hogy sokkal szebben záródik a pálya, mint az Euler módszernél.
 
-\begin{figure}
+\begin{figure}[h!]
 \begin{center}
 \includegraphics[width=0.9\textwidth]{@RK4@}
   \caption{\textit{Runge-Kutta 4 módszer}}
