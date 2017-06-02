@@ -26,7 +26,6 @@ add_custom_target(data DEPENDS ${CMAKE_BINARY_DIR}/euler.dat ${CMAKE_BINARY_DIR}
 
 # Compiler specific options
 if(CMAKE_C_COMPILER_ID MATCHES "MSVC")
-<<<<<<< HEAD
     string(REGEX REPLACE "/W[0-9]" "/W4" CMAKE_C_FLAGS ${CMAKE_C_FLAGS})
     target_compile_definitions(euler PUBLIC _CRT_SECURE_NO_WARNINGS)    
     target_compile_definitions(rk4 PUBLIC _CRT_SECURE_NO_WARNINGS)
@@ -48,16 +47,4 @@ if(NOT RESULT)
     message(FATAL_ERROR "No pow() found")
   endif()
 endif()
-=======
-    if(CMAKE_C_COMPILER_ID MATCHES "MSVC")
-        string(REGEX REPLACE "/W[0-9]" "/W4" CMAKE_C_FLAGS ${CMAKE_C_FLAGS})
-        target_compile_definitions(euler PUBLIC _CRT_SECURE_NO_WARNINGS)    
-        target_compile_definitions(rk4 PUBLIC _CRT_SECURE_NO_WARNINGS)
-    else(CMAKE_C_COMPILER_ID MATCHES "MSVC")
-        add_compile_options("-Wall")
-    endif(CMAKE_C_COMPILER_ID MATCHES "MSVC")
-else(CMAKE_C_COMPILER_ID MATCHES "MSVC")
-    target_link_libraries(euler PRIVATE m)
-    target_link_libraries(rk4 PRIVATE m)
-endif(CMAKE_C_COMPILER_ID MATCHES "MSVC")
->>>>>>> 58e472e72ba5d912ce1b00901f53dfc930026354
+
